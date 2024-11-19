@@ -99,8 +99,17 @@ def post_share(request, post_id):
 
             # Відправка електронною поштою.
             post_url = request.build_absolute_url(post.get_absolute_url())
-            subject = f'{cleaned_data['name']} ({cleaned_data['email']}) recommends you reading "{post.title}"'
-            message = f'Read "{post.title}" at {post_url}\n\n{cleaned_data['name']}\'s comments: {cleaned_data['comment']}'
+            subject = '{} ({}) recommends you reading "{}"'.format(
+                cleaned_data['name'],
+                cleaned_data['email'],
+                post.title
+            )
+            message = 'Read "{}" at {}\n\n{}\'s comments: {}'.format(
+                post.title,
+                post_url,
+                cleaned_data['name'],
+                cleaned_data['comment']
+            )
             send_mail(subject, message, 'admin@myblog.com', [cleaned_data['to']])
             sent = True
         else:

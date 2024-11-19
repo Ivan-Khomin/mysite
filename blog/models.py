@@ -56,7 +56,7 @@ class Post(models.Model):
 
 def save_images(instance, filename):
     post_id = instance.post_id
-    return f'gallery_images/{post_id}/{filename}'
+    return 'gallery_images/{}/{}'.format(post_id, filename)
 
 
 class PostPoint(models.Model):
@@ -74,7 +74,7 @@ class PostPoint(models.Model):
     post_header = models.CharField(max_length=250, default='HEADER')
 
     def __str__(self):
-        return f'Пункт поста {self.post.title}'
+        return 'Пункт поста {}'.format(self.post.title)
 
 
 class Comment(models.Model):
@@ -94,4 +94,4 @@ class Comment(models.Model):
         ordering = ['created']
 
     def __str__(self):
-        return f'Коментар написаний {self.name} о {self.post}'
+        return 'Коментар написаний {} о {}'.format(self.name, self.post)
