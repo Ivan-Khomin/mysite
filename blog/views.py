@@ -11,7 +11,7 @@ from .forms import EmailPostForm, CommentForm
 
 
 def post_list(request, tag_slug=None):
-    object_list = Post.objects.all()
+    object_list = Post.objects.filter(status='published')
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
