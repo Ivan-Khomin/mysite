@@ -48,3 +48,7 @@ p.date {
 .step-links {
     margin: 0 auto;
 }
+.login-form {
+    width: 500px;
+    margin: 0 auto;
+}

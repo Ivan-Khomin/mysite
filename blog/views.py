@@ -1,15 +1,19 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from django.db.models import Count
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
 # from django.views.generic import ListView
 
 from taggit.models import Tag
 
 from .models import Post, PostPoint, Comment
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, LoginForm
 
 
+@login_required
 def post_list(request, tag_slug=None):
     object_list = Post.objects.filter(status='published')
     tag = None
@@ -60,12 +64,12 @@ def post_detail(request, year, month, day, post):
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             # Створюємо коментар, але поки не зберігаємо в базі даних.
-            cd = comment_form.cleaned_data
+            cleaned_data = comment_form.cleaned_data
             new_comment = Comment(
                 post=post_object,
-                name=cd['name'],
-                email=cd['email'],
-                body=cd['comment']
+                name=cleaned_data['name'],
+                email=cleaned_data['email'],
+                body=cleaned_data['comment']
             )
             new_comment.save()
     else:
@@ -88,7 +92,7 @@ def post_detail(request, year, month, day, post):
 def post_share(request, post_id):
     # Отримання статті по ідентифікатору
     post = get_object_or_404(Post, id=post_id, status='published')
-    form = EmailPostForm()
+    form = None
     sent = False
     if request.method == 'POST':
         # Форма була відправлена на збереження.
@@ -119,3 +123,32 @@ def post_share(request, post_id):
         'post': post,
         'form': form
     })
+
+
+def user_login(request):
+    form = None
+
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            user = authenticate(request,
+                                username=cleaned_data['username'],
+                                password=cleaned_data['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Authenticated successfully!')
+                else:
+                    return HttpResponse('Disable account')
+            else:
+                return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+
+    return render(request, 'blog/account/login.html', {'form': form})
+
+
+@login_required
+def dashboard(request):
+    return render(request, 'blog/account/dashboard.html')

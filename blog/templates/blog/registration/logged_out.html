@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "blog/base.html" %}
+{% block title %}Logged out{% endblock %}
+{% block content %}
+    <h1>Logged out</h1>
+    <p>Ви успішно розлогінені.
+    Ви можете <a href="{% url "blog:login" %}">авторизуватися знову</a>.
+    </p>
+{% endblock %}

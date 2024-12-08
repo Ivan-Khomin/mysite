@@ -45,3 +45,17 @@ class CommentForm(forms.Form):
             'rows': '3'
         }
     ))
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'id': 'inputLogin',
+        'class': 'form-control',
+        'placeholder': 'Логін'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'type': 'password',
+        'id': 'inputPassword',
+        'class': 'form-control',
+        'placeholder': 'Пароль'
+    }))

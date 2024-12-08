@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "blog/base.html" %}
+{% load bootstrap %}
+{% block title %}
+    Логін
+{% endblock title %}
+
+{% block content %}
+    <div class="container text-center sign-in">
+        {% if form.errors %}
+            <p>Не правильно введений логін або пароль</p>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">Будь ласка авторизуйтеся</h1>
+        {% endif %}
+        <form action="{% url 'blog:login' %}" class="form-sign-in login-form" method="post" >
+            {{ form.username|bootstrap }}
+            {{ form.password|bootstrap }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{next}}">
+            <button class="btn btn-lg btn-primary mt-2" type="submit" >
+                Увійти
+            </button>
+        </form>
+    </div>
+{% endblock content %}
