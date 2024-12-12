@@ -155,7 +155,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
 
-    return HttpResponse('Logout successfully!')
+    return render(request, 'blog/registration/logged_out.html')
 
 
 @login_required
