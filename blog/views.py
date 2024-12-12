@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 # from django.views.generic import ListView
 
 from taggit.models import Tag
@@ -132,9 +132,11 @@ def user_login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             cleaned_data = form.cleaned_data
-            user = authenticate(request,
-                                username=cleaned_data['username'],
-                                password=cleaned_data['password'])
+            user = authenticate(
+                request,
+                username=cleaned_data['username'],
+                password=cleaned_data['password']
+            )
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -147,6 +149,13 @@ def user_login(request):
         form = LoginForm()
 
     return render(request, 'blog/account/login.html', {'form': form})
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+
+    return HttpResponse('Logout successfully!')
 
 
 @login_required

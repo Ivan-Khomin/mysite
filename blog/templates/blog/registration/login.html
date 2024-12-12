@@ -1,5 +1,4 @@
 {% extends "blog/base.html" %}
-{% load bootstrap %}
 {% block title %}
     Логін
 {% endblock title %}
@@ -12,8 +11,8 @@
             <h1 class="h3 mb-3 font-weight-normal">Будь ласка авторизуйтеся</h1>
         {% endif %}
         <form action="{% url 'blog:login' %}" class="form-sign-in login-form" method="post" >
-            {{ form.username|bootstrap }}
-            {{ form.password|bootstrap }}
+            {{ form.username }}
+            {{ form.password }}
             {% csrf_token %}
             <input type="hidden" name="next" value="{{next}}">
             <button class="btn btn-lg btn-primary mt-2" type="submit" >
