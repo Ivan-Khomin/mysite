@@ -92,7 +92,6 @@ def post_detail(request, year, month, day, post):
 def post_share(request, post_id):
     # Отримання статті по ідентифікатору
     post = get_object_or_404(Post, id=post_id, status='published')
-    form = None
     sent = False
     if request.method == 'POST':
         # Форма була відправлена на збереження.
@@ -116,8 +115,8 @@ def post_share(request, post_id):
             )
             send_mail(subject, message, 'admin@myblog.com', [cleaned_data['to']])
             sent = True
-        else:
-            form = EmailPostForm()
+    else:
+        form = EmailPostForm()
 
     return render(request, 'blog/post/share.html', {
         'post': post,
@@ -126,8 +125,6 @@ def post_share(request, post_id):
 
 
 def user_login(request):
-    form = None
-
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
