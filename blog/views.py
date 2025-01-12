@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from taggit.models import Tag
 
 from .models import Post, PostPoint, Comment
-from .forms import EmailPostForm, CommentForm, LoginForm
+from .forms import EmailPostForm, CommentForm, LoginForm, PostForm
 
 
 @login_required
@@ -165,3 +165,19 @@ def dashboard(request):
         'posts_pub': posts_pub,
         'posts_draft': posts_draft
     })
+
+
+@login_required
+def post_add(request):
+    user = request.user
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = user
+            post.save()
+    else:
+        form = PostForm()
+
+    return render(request, 'blog/account/post_add.html', {'form': form})

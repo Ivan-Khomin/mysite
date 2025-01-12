@@ -14,5 +14,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     # path('login/', auth_views.LoginView().as_view, name='login'),
     path('logout/', views.user_logout, name='logout'),
-    path('dashboard/', views.dashboard, name='dashboard')
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('post-add/', views.post_add, name='post_add')
 ]

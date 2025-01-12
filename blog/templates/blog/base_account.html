@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    Приватний кабінет
+{% endblock %}
+{% block content %}
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-3 left-navbar">
+                {% block left_navbar %}
+                    <h2 class="text-center mb-5">Функції ПК</h2>
+                    <ul>
+                        <li>
+                            <a href="{% url 'blog:dashboard' %}">
+                                Мої пости
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'blog:post_add' %}">
+                                Додати пост
+                            </a>
+                        </li>
+                    </ul>
+                {% endblock %}
+            </div>
+            <div class="col-8 account-content">
+                {% block account_content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

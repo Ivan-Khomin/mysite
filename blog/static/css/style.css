@@ -75,3 +75,45 @@ p.date {
     float:right;
     padding-top:4px;
 }
+
+.left-navbar {
+    background: linear-gradient(to bottom,
+                    #574b60,#7d8491);
+    min-height: calc(100vh - 86px);
+}
+
+.left-navbar h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color:#f3f7cc ;
+}
+
+.left-navbar li {
+    padding: 10px;
+    font-size: 20px;
+    list-style-type: none;
+}
+
+.left-navbar li:hover {
+    background-color: #007bff;
+}
+
+.left-navbar li:hover a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.left-navbar li:active {
+    background-color: #0058af;
+}
+
+.left-navbar li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+}
+
+nav {
+    background-color: #574b60;
+}

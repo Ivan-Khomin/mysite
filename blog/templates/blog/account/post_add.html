@@ -1,0 +1,9 @@
+{% extends "blog/base.html" %}
+{% block title %}Приватний кабінет{% endblock %}
+{% block content %}
+    <form action="." method="post" enctype="multipart/form-data">
+{{ form }}
+    <button type="submit">Додати</button>
+    {% csrf_token %}
+    </form>
+{% endblock %}
