@@ -2,5 +2,17 @@
 {% block title %}Приватний кабінет{% endblock %}
 {% block content %}
     <h1>Приватний кабінет</h1>
-    <p>Вітаємо в приватному кабінеті</p>
+    {% if posts_pub %}
+        <h2>Мої опубліковані рецепти: </h2>
+        {% for post in posts_pub %}
+            <h3><a href="{{post.get_absolute_url}}">{{ post.title }}</a></h3>
+        {% endfor %}
+    {% endif %}
+    {% if posts_draft %}
+        <h2>Мої не опубліковані рецепти: </h2>
+        {% for post in posts_draft %}
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.short_descriptions }}</p>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

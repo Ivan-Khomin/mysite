@@ -54,3 +54,24 @@ p.date {
     width: 500px;
     margin: 0 auto;
 }
+
+#header {
+    padding:10px 100px;
+    font-size:14px;
+    color:#fff;
+    border-bottom:4px solid #1cdf78;
+    overflow:auto;
+}
+
+#header a {
+    color:#f3f7cc;
+}
+
+#header a:hover {
+    color:#fff;
+}
+
+#header .user {
+    float:right;
+    padding-top:4px;
+}
