@@ -64,3 +64,20 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'short_description', 'image', 'tags']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'titleInput'
+            }),
+            'short_description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'id': 'shortDescriptionText'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'id': 'imageFile'
+            }),
+            'tags': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'tagsInput'
+            })
+        }

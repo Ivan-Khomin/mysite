@@ -1,12 +1,12 @@
 {% extends 'blog/base_account.html' %}
 {% block title %}
-    Створити пост
-{% endblock title %}
+    Редагувати пост
+{% endblock %}
 {% block account_content %}
     <div class="container sign-in">
         {% if form.errors %}
             <p>{{ form.errors }}</p>
-            <p>Щось забув</p>
+            <p>Щось забули</p>
             <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="titleInput">Заголовок</label>
@@ -26,18 +26,18 @@
                 </div>
                 {% csrf_token %}
                 <button class="btn btn-lg btn-primary mt-2" type="submit">
-                    Додати пост
+                    Зберегти зміни
                 </button>
             </form>
         {% elif form.is_valid %}
             <h1 class="h3 mb-3 font-weight-normal">
-               Пост відправлений на модерацію
+                Пост успішно змінений
             </h1>
             <h2 class="mb-3 font-weight-normal">
                 Ви можете:
             </h2>
             <a href="{% url 'blog:dashboard' %}" class="btn btn-dark">Повернутися до списку ваших постів</a>
-            <a href="{% url 'blog:post_add' %}" class="btn btn-primary">Додати пост</a>
+            <a href="{% url 'blog:post_edit' post.id %} " class="btn btn-primary">Редагувати пост</a>
         {% else %}
             <h1 class="h3 mb-3 font-weight-normal">
                 Будь ласка заповніть поля
@@ -57,14 +57,13 @@
                 </div>
                 <div class="form-group">
                     <label for="imageFile">Зображення</label>
-                    <br>
                     {{ form.image }}
                 </div>
                 {% csrf_token %}
                 <button class="btn btn-lg btn-primary mt-2" type="submit">
-                    Додати пост
+                    Зберегти зміни
                 </button>
             </form>
         {% endif %}
     </div>
-{% endblock  %}
+{% endblock %}

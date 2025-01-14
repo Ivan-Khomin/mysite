@@ -35,9 +35,8 @@
                                 <a class="btn btn-primary m-2">
                                     Етапи готування
                                 </a>
-                                <a class="btn btn-success m-2"
-                                   href="#">Редагувати</a>
-                                <a class="btn btn-danger m-2" href="#">Видалити</a>
+                                <a class="btn btn-success m-2" href="{% url 'blog:post_edit' post.id %}">Редагувати</a>
+                                <a class="btn btn-danger m-2" href="{% url 'blog:post_delete' post.id %}">Видалити</a>
                             </div>
                         </div>
                     </div>
@@ -78,9 +77,8 @@
                                 <a class="btn btn-primary m-2" href="#">
                                     Етапи готування
                                 </a>
-                                <a class="btn btn-success m-2"
-                                   href="#">Редагувати</a>
-                                <a class="btn btn-danger m-2" href="#">Видалити</a>
+                                <a class="btn btn-success m-2"  href="{% url 'blog:post_edit' post.id %}">Редагувати</a>
+                                <a class="btn btn-danger m-2" href="{% url 'blog:post_delete' post.id %}">Видалити</a>
                             </div>
                         </div>
                     </div>
