@@ -17,12 +17,14 @@ from .forms import EmailPostForm, CommentForm, LoginForm, PostForm
 def post_list(request, tag_slug=None):
     object_list = Post.objects.filter(status='published')
     tag = None
+
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         object_list = object_list.filter(tags__in=[tag])
 
     paginator = Paginator(object_list, 2) # По 2 статті на кожній сторінці.
     page = request.GET.get('page')
+
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -59,6 +61,7 @@ def post_detail(request, year, month, day, post):
     # Список активних коментарів для цієї статті.
     comments = post_object.comments.filter(active=True)
     new_comment = None
+
     if request.method == 'POST':
         # Користувач відправив коментар.
         comment_form = CommentForm(data=request.POST)
@@ -93,6 +96,7 @@ def post_share(request, post_id):
     # Отримання статті по ідентифікатору
     post = get_object_or_404(Post, id=post_id, status='published')
     sent = False
+
     if request.method == 'POST':
         # Форма була відправлена на збереження.
         form = EmailPostForm()
@@ -189,6 +193,7 @@ def post_add(request):
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post_edit_form = PostForm(instance=post)
+
     if request.method == 'POST':
         post_edit_form = PostForm(request.POST, request.FILES, instance=post)
         if post_edit_form.is_valid():
