@@ -1,71 +1,63 @@
 {% extends 'blog/base_account.html' %}
 {% block title %}
-    Створити пост
-{% endblock title %}
+    Редагувати пункт поста
+{% endblock %}
 {% block account_content %}
-    <div class="container sign-in">
+    <div class="container text-center sign-in">
         {% if form.errors %}
             <p>{{ form.errors }}</p>
-            <p>Щось забув</p>
+            <p>Щось забули</p>
             <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="titleInput">Заголовок</label>
-                    {{ form.title }}
+                    <label for="headerInput">Заголовок</label>
+                    {{ form.post_header }}
                 </div>
                 <div class="form-group">
-                    <label for="shortDescriptionText">Коротке описання</label>
-                    {{ form.short_description }}
-                </div>
-                <div class="form-group">
-                    <label for="tagsInput">Теги</label>
-                    {{ form.tags }}
+                    <label for="text">Текст</label>
+                    {{ form.post_point_text }}
                 </div>
                 <div class="form-group">
                     <label for="imageFile">Зображення</label>
                     <br>
-                    {{ form.image }}
+                    {{ form.post_image }}
                 </div>
                 {% csrf_token %}
                 <button class="btn btn-lg btn-primary mt-2" type="submit">
-                    Додати пост
+                    Зберегти зміни
                 </button>
             </form>
         {% elif form.is_valid %}
             <h1 class="h3 mb-3 font-weight-normal">
-               Пост відправлений на модерацію
+                Пункт поста успішно змінений
             </h1>
             <h2 class="mb-3 font-weight-normal">
                 Ви можете:
             </h2>
-            <a href="{% url 'blog:dashboard' %}" class="btn btn-dark">Повернутися до списку ваших постів</a>
-            <a href="{% url 'blog:post_add' %}" class="btn btn-primary">Додати пост</a>
+            <a href="{% url 'blog:post_point_list' post.id %}" class="btn btn-dark">Повернутися до списку постів</a>
+            <a href="{% url 'blog:post_point_edit' post_point.id %}" class="btn btn-primary">Знову змінити цей пункт</a>
         {% else %}
             <h1 class="h3 mb-3 font-weight-normal">
-                Будь ласка заповніть поля
+                БУдь ласка заповніть всі поля
             </h1>
             <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="titleInput">Заголовок</label>
-                    {{ form.title }}
+                    <label for="headerInput">Заголовок</label>
+                    {{ form.post_header }}
                 </div>
                 <div class="form-group">
-                    <label for="shortDescriptionText">Коротке описання</label>
-                    {{ form.short_description }}
-                </div>
-                <div class="form-group">
-                    <label for="tagsInput">Теги</label>
-                    {{ form.tags }}
+                    <label for="text">Текст</label>
+                    {{ form.post_point_text }}
                 </div>
                 <div class="form-group">
                     <label for="imageFile">Зображення</label>
                     <br>
-                    {{ form.image }}
+                    {{ form.post_image }}
                 </div>
                 {% csrf_token %}
                 <button class="btn btn-lg btn-primary mt-2" type="submit">
-                    Додати пост
+                    Зберегти зміни
                 </button>
             </form>
         {% endif %}
     </div>
-{% endblock  %}
+{% endblock %}

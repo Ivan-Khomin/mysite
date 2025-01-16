@@ -1,0 +1,63 @@
+{% extends 'blog/base_account.html' %}
+{% block title %}
+    Додати пункт поста
+{% endblock %}
+{% block account_content %}
+    <div class="container text-center sign-in">
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+            <p>Щось забули</p>
+            <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="headerInput">Заголовок</label>
+                    {{ form.post_header }}
+                </div>
+                <div class="form-group">
+                    <label for="text">Текст</label>
+                    {{ form.post_point_text }}
+                </div>
+                <div class="form-group">
+                    <label for="imageFile">Зображення</label>
+                    <br>
+                    {{ form.post_image }}
+                </div>
+                {% csrf_token %}
+                <button class="btn btn-lg btn-primary mt-2" type="submit">
+                    Додати пункт поста
+                </button>
+            </form>
+        {% elif form.is_valid %}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Пункт поста доданий
+            </h1>
+            <h2 class="mb-3 font-weight-normal">
+                Ви можете:
+            </h2>
+            <a href="{% url 'blog:post_point_list' post.id %}" class="btn btn-dark">Повернутися до списку ваших постів</a>
+            <a href="{% url 'blog:post_point_add' post.id %}" class="btn btn-primary">Додати новий пункт поста</a>
+        {% else %}
+            <h1 class="h3 mb-3 font-weight-normal">
+                Будь ласка заповніть поля
+            </h1>
+            <form action="." class="form-sign-in login-form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                    <label for="headerInput">Заголовок</label>
+                    {{ form.post_header }}
+                </div>
+                <div class="form-group">
+                    <label for="text">Текст</label>
+                    {{ form.post_point_text }}
+                </div>
+                <div class="form-group">
+                    <label for="imageFile">Зображення</label>
+                    <br>
+                    {{ form.post_image }}
+                </div>
+            {% csrf_token %}
+            <button class="btn btn-lg btn-primary mt-2" type="submit">
+                Додати пункт поста
+            </button>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}

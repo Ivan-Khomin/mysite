@@ -1,5 +1,6 @@
 from django import forms
-from .models import Post
+
+from .models import Post, PostPoint
 
 
 class EmailPostForm(forms.Form):
@@ -79,5 +80,24 @@ class PostForm(forms.ModelForm):
             'tags': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'tagsInput'
+            })
+        }
+
+
+class PostPointForm(forms.ModelForm):
+    class Meta:
+        model = PostPoint
+        fields = ['post_header', 'post_point_text', 'post_image']
+        widgets = {
+            'post_header': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'headerInput'
+            }),
+            'post_point_text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'id': 'text'
+            }),
+            'post_image': forms.ClearableFileInput(attrs={
+                'id': 'imageFile'
             })
         }

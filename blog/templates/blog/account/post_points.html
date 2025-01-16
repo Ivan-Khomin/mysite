@@ -1,0 +1,49 @@
+{% extends 'blog/base_account.html' %}
+{% block title %}
+    Приватний кабінет
+{% endblock %}
+{% block account_content %}
+    <div class="title-post-point-page">
+        <h2 class="text-center mb-4">
+            Етапи готування рецепта "{{ post.title }}"
+        </h2>
+        <a class="btn btn-primary m-2 add-point" href="{% url 'blog:post_point_add' post.id %}">
+            Додати етап
+        </a>
+    </div>
+    <div class="card-deck">
+        <div class="row row-cols-3 row-cols-md-3">
+            {% for p_p in post_points %}
+                <div class="col mb-4" >
+                    <div class="card" style="height: 100%">
+                        {% if p_p.post_point_image %}
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ MEDIA_URL }}{{ p_p.post_point_image.url }}"
+                                     class="card-img-top" alt="...">
+                            </a>
+                        {% else %}
+                             <a href="{{ post.get_absolute_url }}">
+                                <img src="https://thumbs.dreamstime.com/z/no-image-available-icon-photo-camera-flat-vector-illustration-132483296.jpg"
+                                     class="card-img-top" alt="...">
+                            </a>
+                        {% endif %}
+                        <div class="card-body">
+                            <a href="#">
+                                <h5 class="card-title">
+                                    {{ p_p.post_point_header }}
+                                </h5>
+                            </a>
+                            <p class="card-text">
+                                {{ p_p.post_point_text|truncatewords:25 }}
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-primary m-2" href="{% url 'blog:post_point_edit' p_p.id %}">Редагувати</a>
+                            <a class="btn btn-danger m-2" href="{% url 'blog:post_point_delete' p_p.id %}">Видалити</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -32,7 +32,7 @@
                                     {% endfor %}
                                 </p>
 
-                                <a class="btn btn-primary m-2">
+                                <a class="btn btn-primary m-2" href="{% url 'blog:post_point_list' post.id %}">
                                     Етапи готування
                                 </a>
                                 <a class="btn btn-success m-2" href="{% url 'blog:post_edit' post.id %}">Редагувати</a>
@@ -74,7 +74,7 @@
                                         {% endif %}
                                     {% endfor %}
                                 </p>
-                                <a class="btn btn-primary m-2" href="#">
+                                <a class="btn btn-primary m-2" href="{% url 'blog:post_point_list' post.id %}">
                                     Етапи готування
                                 </a>
                                 <a class="btn btn-success m-2"  href="{% url 'blog:post_edit' post.id %}">Редагувати</a>
