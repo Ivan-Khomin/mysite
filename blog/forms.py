@@ -153,3 +153,12 @@ class UserEditForm(forms.ModelForm):
                 'id': 'emailInput'
             })
         }
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control mr-sm-2',
+        'type': 'search',
+        'placeholder': 'Search',
+        'aria-label': 'Search'
+    }))

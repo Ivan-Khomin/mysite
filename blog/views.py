@@ -10,12 +10,24 @@ from django.contrib.auth import authenticate, login, logout
 from taggit.models import Tag
 
 from .models import Post, PostPoint, Comment, User
-from .forms import EmailPostForm, CommentForm, LoginForm, PostForm, PostPointForm, UserCreateForm, UserEditForm
+from .forms import EmailPostForm, CommentForm, LoginForm, PostForm, PostPointForm, UserCreateForm, UserEditForm, SearchForm
 
 
 @login_required
 def post_list(request, tag_slug=None):
-    object_list = Post.objects.filter(status='published')
+    search_form = SearchForm()
+    query = None
+
+    if 'query' in request.GET:
+        search_form = SearchForm(request.GET)
+        if search_form.is_valid():
+            query = search_form.cleaned_data['query']
+            try:
+                object_list = Post.objects.filter(title__contains=query, status='published')
+            except:
+                object_list = None
+    else:
+        object_list = Post.objects.filter(status='published')
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -35,7 +47,8 @@ def post_list(request, tag_slug=None):
     return render(request, 'blog/post/list.html', {
         'page': page,
         'posts': posts,
-        'tag': tag
+        'tag': tag,
+        'search_form': search_form
     })
 
 

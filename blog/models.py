@@ -36,10 +36,12 @@ class Post(models.Model):
         blank=False,
         verbose_name='Зображення'
     )
-    tags = TaggableManager()
+    tags = TaggableManager(verbose_name='Теги')
 
     class Meta:
         ordering = ['-publish']
+        verbose_name = 'Публікація'
+        verbose_name_plural = 'Публікації'
 
     def __str__(self):
         return self.title
@@ -69,15 +71,24 @@ class PostPoint(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        default=None
+        default=None,
+        verbose_name='Пост етапу готування'
     )
-    post_point_text = models.TextField(verbose_name='Пункт поста')
+    post_point_text = models.TextField(verbose_name='Текст етапу готування')
     post_image = models.ImageField(
         upload_to=save_images,
         blank=True,
         verbose_name='Зображення пункту'
     )
-    post_header = models.CharField(max_length=250, default='HEADER')
+    post_header = models.CharField(
+        max_length=250,
+        default='HEADER',
+        verbose_name='Шапка етапу готування'
+    )
+
+    class Meta:
+        verbose_name = 'Етап готування'
+        verbose_name_plural = 'Етапи готування'
 
     def __str__(self):
         return 'Пункт поста {}'.format(self.post.title)
@@ -87,17 +98,20 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        verbose_name='Пост коментаря'
     )
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=80, verbose_name='Ім\'я')
     email = models.EmailField()
-    body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
+    body = models.TextField(verbose_name='Текст коментаря')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата створення')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Дата оновлення')
+    active = models.BooleanField(default=True, verbose_name='Статус')
 
     class Meta:
         ordering = ['created']
+        verbose_name = 'Коментар'
+        verbose_name_plural = 'Коментарі'
 
     def __str__(self):
         return 'Коментар написаний {} о {}'.format(self.name, self.post)

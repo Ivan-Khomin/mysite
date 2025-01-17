@@ -56,15 +56,17 @@ p.date {
 }
 
 #header {
-    padding:10px 100px;
+    padding:10px 60px;
     font-size:14px;
     color:#fff;
-    border-bottom:4px solid #1cdf78;
+    border-bottom:4px solid #C0C5C1;
     overflow:auto;
 }
 
 #header a {
     color:#f3f7cc;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #header a:hover {
@@ -116,4 +118,25 @@ p.date {
 
 nav {
     background-color: #574b60;
+}
+
+.logo-img {
+    height: 60px
+}
+
+.account-content {
+    margin: 0 auto;
+}
+
+.add-point {
+    display: block;
+    margin: 0 auto;
+}
+
+.mb_my {
+    margin-bottom: 100px;
+}
+
+.search-form label {
+    display: none;
 }
