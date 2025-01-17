@@ -9,8 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 
 from taggit.models import Tag
 
-from .models import Post, PostPoint, Comment
-from .forms import EmailPostForm, CommentForm, LoginForm, PostForm, PostPointForm
+from .models import Post, PostPoint, Comment, User
+from .forms import EmailPostForm, CommentForm, LoginForm, PostForm, PostPointForm, UserCreateForm, UserEditForm
 
 
 @login_required
@@ -266,3 +266,35 @@ def post_point_delete(request, post_point_id):
         return redirect('blog:post_point_list', post_id=post_point.post.id)
     except PostPoint.DoesNotExist:
         return redirect('blog:post_point_list')
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        user_form = UserCreateForm(request.POST)
+        if user_form.is_valid():
+            new_user = User.objects.create_user(**user_form.cleaned_data)
+            new_user.save()
+            login(
+                request,
+                authenticate(
+                    username=user_form.cleaned_data['username'],
+                    password=user_form.cleaned_data['password']
+                )
+            )
+            return redirect('blog:post_list')
+    else:
+        user_form = UserCreateForm()
+
+    return render(request, 'blog/registration/sign_up.html', {'user_form': user_form})
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+
+    return render(request, 'blog/account/profile.html', {'user_form': user_form})

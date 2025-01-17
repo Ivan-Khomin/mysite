@@ -7,14 +7,14 @@
         {% if form.errors %}
             <p>Не правильно введений логін або пароль</p>
         {% else %}
-            <h1 class="h3 mb-3 font-weight-normal">Будь ласка авторизуйтеся</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Будь ласка, авторизуйтеся</h1>
         {% endif %}
         <form action="{% url 'blog:login' %}" class="form-sign-in login-form" method="post" >
             {{ form.username }}
             {{ form.password }}
             {% csrf_token %}
             <input type="hidden" name="next" value="{{next}}">
-            <button class="btn btn-lg btn-primary mt-2" type="submit" >
+            <button class="btn btn-lg btn-primary mt-2" type="submit">
                 Увійти
             </button>
         </form>

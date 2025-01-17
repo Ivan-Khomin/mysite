@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container text-center sign-in">
         <form action="." class="form-sign-in login-form" method="post">
-          <h1 class="h3 mb-3 font-weight-normal">Будь ласка авторизуйтеся</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Будь ласка авторизуйтеся</h1>
             <label for="inputLogin" >Логін</label>
             {{ form.username }}
             <label for="inputPassword" >Пароль</label>
@@ -14,6 +14,7 @@
             <button class="btn btn-lg btn-primary mt-2" type="submit">
                 Увійти
             </button>
+            <a href="{% url 'blog:sign-up' %}" class="btn mt-2 btn-lg btn-dark">Створити аккаунт</a>
         </form>
     </div>
 {% endblock content %}

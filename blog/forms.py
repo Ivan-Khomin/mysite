@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post, PostPoint
+from .models import Post, PostPoint, User
 
 
 class EmailPostForm(forms.Form):
@@ -99,5 +99,57 @@ class PostPointForm(forms.ModelForm):
             }),
             'post_image': forms.ClearableFileInput(attrs={
                 'id': 'imageFile'
+            })
+        }
+
+
+class UserCreateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'firstNameInput'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'lastNameInput'
+            }),
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'usernameInput'
+            }),
+            'email':  forms.EmailInput(attrs={
+                'class': 'form-control',
+                'id': 'emailInput'
+            }),
+            'password': forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'id': 'passwordInput'
+            })
+        }
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'firstNameInput'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'lastNameInput'
+            }),
+            'username': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'usernameInput'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'id': 'emailInput'
             })
         }
