@@ -109,7 +109,7 @@ class Comment(models.Model):
     active = models.BooleanField(default=True, verbose_name='Статус')
 
     class Meta:
-        ordering = ['created']
+        ordering = ['-created']
         verbose_name = 'Коментар'
         verbose_name_plural = 'Коментарі'
 
