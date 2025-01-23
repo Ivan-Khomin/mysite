@@ -140,3 +140,12 @@ nav {
 .search-form label {
     display: none;
 }
+
+.detail-image-size {
+    width: 60%;
+    margin: 20px auto;
+}
+
+.favourite img{
+    margin: 50px 80px 0 -120px;
+}

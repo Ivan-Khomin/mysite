@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 {% block title %}
     {{ post.title }}
 {% endblock %}
@@ -6,7 +7,20 @@
     <div class="container my-3">
         <div class="card-deck">
             <div class="card">
-                <img src="{{ MEDIA_URL }}{{ post.image.url }}" class="card-img-top" alt="...">
+                <div class="row">
+                    <img src="{{ MEDIA_URL }}{{ post.image.url }}" class="card-img-top detail-image-size" alt="...">
+                    <div class="favourite">
+                        {% if post in request.user.fav_posts.all %}
+                            <a href="{% url 'blog:delete_from_favourite' post.id %}">
+                                <img src="{% static 'img/star-yellow.png' %}" alt="">
+                            </a>
+                        {% else %}
+                            <a href="{% url 'blog:add_to_favourite' post.id %}">
+                                <img src="{% static 'img/star-empty.png' %}" alt="">
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ post.title }}</h5>
                     <p class="card-text">{{ post.short_description }}</p>
@@ -33,17 +47,29 @@
                 </div>
             </div>
         </div>
-    </div>
     <h2>Similar posts</h2>
-    {% for post in similar_posts %}
-        <p>
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-        </p>
-    {% empty %}
-    There are no similar posts yet.
-    {% endfor %}
+    {% if similar_posts %}
+        <h2 class="text-center mb-3">Схожі пости</h2>
+        <div class="row row-cols-1 row-cols-md-3">
+            {% for post in similar_posts %}
+                  <div class="col mb-4">
+                        <div class="card h-100">
+                            <img src="{{ MEDIA_URL }}{{ post.image.url }}" class="card-img-top detail-image-size" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{{post.get_absolute_url}}">
+                                        {{ post.title|truncatechars:70 }}
+                                    </a>
+                                </h5>
+                            </div>
+                        </div>
+                  </div>
+            {% empty %}
+            {% endfor %}
+        </div>
+    {% endif %}
     {% with comments.count as total_comments %}
-        <h2>{{ total_comments }} коментарів</h2>
+        <h2 class="text-center">{{ total_comments }} коментарів</h2>
     {% endwith %}
     {% for comment in comments %}
         <div class="card border-dark mb-3">

@@ -59,14 +59,16 @@ def post_list(request, tag_slug=None):
 #     template_name = 'blog/post/list.html'
 
 
-def post_detail(request, year, month, day, post):
+@login_required
+def post_detail(request, year, month, day, post, post_id):
     post_object = get_object_or_404(
         Post,
         slug=post,
         status='published',
         publish__year=year,
         publish__month=month,
-        publish__day=day
+        publish__day=day,
+        id=post_id
     )
     post_points = PostPoint.objects.filter(post=post_object)
     # Список активних коментарів для цієї статті.
@@ -311,3 +313,39 @@ def edit_profile(request):
         user_form = UserEditForm(instance=request.user)
 
     return render(request, 'blog/account/profile.html', {'user_form': user_form})
+
+
+def add_to_favourite(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.favourite.add(request.user)
+    return redirect(
+        'blog:post_detail',
+        year=post.publish.year,
+        month=post.publish.month,
+        day=post.publish.day,
+        post=post.slug,
+        post_id=post.id
+    )
+
+
+def delete_from_favourite(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.favourite.remove(request.user)
+    return redirect(
+        'blog:post_detail',
+        year=post.publish.year,
+        month=post.publish.month,
+        day=post.publish.day,
+        post=post.slug,
+        post_id=post.id
+    )
+
+
+def delete_from_favourite_in_dashboard(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.favourite.remove(request.user)
+    return redirect('blog:favourite_posts')
+
+
+def favourite_posts(request):
+    return render(request, 'blog/account/fav_posts.html')

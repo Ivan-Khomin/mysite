@@ -2,9 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.text import slugify
 
 from taggit.managers import TaggableManager
-from slugify import slugify
 
 
 class Post(models.Model):
@@ -37,6 +37,7 @@ class Post(models.Model):
         verbose_name='Зображення'
     )
     tags = TaggableManager(verbose_name='Теги')
+    favourite = models.ManyToManyField(User, related_name='fav_posts', blank=True)
 
     class Meta:
         ordering = ['-publish']
@@ -53,7 +54,8 @@ class Post(models.Model):
                 self.publish.year,
                 self.publish.month,
                 self.publish.day,
-                self.slug
+                self.slug,
+                self.id
             ]
         )
 

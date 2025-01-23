@@ -1,0 +1,43 @@
+{% extends 'blog/base_account.html' %}
+{% block title %}
+    Приватний кабінет
+{% endblock %}
+{% block account_content %}
+<h2 class="text-center mb-4">Мої вибрані рецепти:</h2>
+    <div class="card-deck">
+        <div class="row row-cols-3 row-cols-md-3">
+            {% for post in request.user.fav_posts.all %}
+                    <div class="col mb-4" >
+                        <div class="card" style="height: 100%">
+                            <a href="{{ post.get_absolute_url }}">
+                                <img src="{{ MEDIA_URL }}{{ post.image.url }}" class="card-img-top" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <a href="{{ post.get_absolute_url }}">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                </a>
+                                <p class="card-text">{{ post.short_description|truncatewords:25 }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Опубліковано {{ post.publish }}. Автор {{ post.author }}</small>
+
+                                <p> Теги:
+                                    {% for tag in post.tags.all %}
+                                        <a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                                            {{ tag.name }}
+                                        </a>
+                                        {% if not forloop.last %}
+                                            ,
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                                <a class="btn btn-danger m-2" href="{% url 'blog:delete_from_favourite_in_dashboard' post.id %}">
+                                    Видалити з вибраних
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
